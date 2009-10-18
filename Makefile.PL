@@ -1,4 +1,4 @@
-# $Id: Makefile.PL 5 2009-09-16 15:15:27Z stro $
+# $Id: Makefile.PL 8 2009-10-18 11:43:13Z stro $
 
 use strict;
 use warnings;

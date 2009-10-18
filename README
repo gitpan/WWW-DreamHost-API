@@ -1,8 +1,8 @@
 NAME
-    WWW::DreamHost::API
+    WWW::DreamHost::API - Perl interface to DreamHost Web Panel API
 
 VERSION
-    1.00
+    1.01
 
 SYNOPSIS
      my $key = '6SHU5P2HLDAYECUM';
@@ -35,10 +35,10 @@ METHODS
 
     To get a list of availible commands, use something like that:
 
-            my $res = $api->command('api-list_accessible_cmds');
-            if ($res->{'success'}) {
-                    my @commands = @{ $res->{'data'} };
-            }
+        my $res = $api->command('api-list_accessible_cmds');
+        if ($res->{'success'}) {
+            my @commands = @{ $res->{'data'} };
+        }
 
     Returns a hash reference with (usually) 'result' and 'data' keys.
     'result' can be 'success' or 'error', and 'data' depends on command

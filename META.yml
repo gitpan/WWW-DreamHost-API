@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               WWW-DreamHost-API
-version:            1.00
+version:            1.01
 abstract:           DreamHost Web Panel API
 author:
     - Serguei Trouchelle <stro@cpan.org>
@@ -18,7 +18,7 @@ no_index:
     directory:
         - t
         - inc
-generated_by:       ExtUtils::MakeMaker version 6.52
+generated_by:       ExtUtils::MakeMaker version 6.55_02
 meta-spec:
     url:      http://module-build.sourceforge.net/META-spec-v1.4.html
     version:  1.4

@@ -1,23 +1,23 @@
 package WWW::DreamHost::API;
 
-# $Id: API.pm 5 2009-09-16 15:15:27Z stro $
+# $Id: API.pm 8 2009-10-18 11:43:13Z stro $
 
 use strict;
 use warnings;
 use Carp;
 
-our $VERSION = '1.00';
+our $VERSION = '1.01';
 
 use LWP::UserAgent;
 use Data::UUID;
 
 =head1 NAME
 
-WWW::DreamHost::API
+WWW::DreamHost::API - Perl interface to DreamHost Web Panel API
 
 =head1 VERSION
 
-1.00
+1.01
 
 =head1 SYNOPSIS
 
@@ -41,23 +41,23 @@ Creates WWW::DreamHost::API object
 =cut
 
 sub new {
-	my $class = shift;
-	my $key   = shift;
+    my $class = shift;
+    my $key   = shift;
 
-	croak 'You should provide a key in order to use WWW::DreamHost::API' unless defined $key;
+    croak 'You should provide a key in order to use WWW::DreamHost::API' unless defined $key;
 
-	my $self = {
-		'__key'  => $key,
-		'__ua'   => LWP::UserAgent->new('agent' => 'WWW-DreamHost-API/' . $VERSION),
-		'__ug'   => new Data::UUID,
-		'__uniq' => int(rand(time())),
+    my $self = {
+        '__key'  => $key,
+        '__ua'   => LWP::UserAgent->new('agent' => 'WWW-DreamHost-API/' . $VERSION),
+        '__ug'   => new Data::UUID,
+        '__uniq' => int(rand(time())),
 
-	};
+    };
 
-	$self->{'__ua'}->env_proxy();
+    $self->{'__ua'}->env_proxy();
 
-	bless $self, $class;
-	return $self;
+    bless $self, $class;
+    return $self;
 }
 
 =head2 uuid ( )
@@ -68,9 +68,9 @@ Don't worry, if it's not, because it's reinitializing in case of failure (though
 =cut
 
 sub uuid {
-	my $self = shift;
-	my $uuid = $self->{'__ug'}->create_from_name('WWW-DreamHost-API-'. $self->{'__key'}, $self->{'__uniq'}++);
-	return $self->{'__ug'}->to_string($uuid);
+    my $self = shift;
+    my $uuid = $self->{'__ug'}->create_from_name('WWW-DreamHost-API-'. $self->{'__key'}, $self->{'__uniq'}++);
+    return $self->{'__ug'}->to_string($uuid);
 }
 
 =head2 reinit ( )
@@ -80,9 +80,9 @@ If unique check fails, attempt to re-initialize. You don't have to call it yours
 =cut
 
 sub reinit {
-	my $self = shift;
-	$self->{'__uniq'} = int(rand(time()));
-	return 1;
+    my $self = shift;
+    $self->{'__uniq'} = int(rand(time()));
+    return 1;
 }
 
 =head2 command ( $cmd, [ $param => $value, ]+ )
@@ -91,10 +91,10 @@ Execute a command.
 
 To get a list of availible commands, use something like that:
 
-	my $res = $api->command('api-list_accessible_cmds');
-	if ($res->{'success'}) {
-		my @commands = @{ $res->{'data'} };
-	}
+    my $res = $api->command('api-list_accessible_cmds');
+    if ($res->{'success'}) {
+        my @commands = @{ $res->{'data'} };
+    }
 
 Returns a hash reference with (usually) 'result' and 'data' keys. 'result' can be 'success' or 'error', and 'data' depends on command executed.
 
@@ -103,40 +103,40 @@ See L<http://wiki.dreamhost.com/Application_programming_interface> for more deta
 =cut
 
 sub command {
-	my $self = shift;
-	my $cmd = shift;
-	my %extraparam = @_;
-	delete $extraparam{$_} foreach (qw/ key cmd unique_id format /); # fool-proof
+    my $self = shift;
+    my $cmd = shift;
+    my %extraparam = @_;
+    delete $extraparam{$_} foreach (qw/ key cmd unique_id format /); # fool-proof
 
-	while (1) {
-		# Loop until UUID is unique. Though I'm VERY doubtful this can happen in real life.
+    while (1) {
+        # Loop until UUID is unique. Though I'm VERY doubtful this can happen in real life.
 
-		my $res = $self->{'__ua'}->post('https://api.dreamhost.com/', {
-			'key'       => $self->{'__key'},
-			'cmd'       => $cmd,
-			'unique_id' => $self->uuid(),
-			'format'    => 'perl',
-			%extraparam,
-		});
+        my $res = $self->{'__ua'}->post('https://api.dreamhost.com/', {
+            'key'       => $self->{'__key'},
+            'cmd'       => $cmd,
+            'unique_id' => $self->uuid(),
+            'format'    => 'perl',
+            %extraparam,
+        });
 
-    	if ($res->is_success()) {
-    		my $result;
-    		eval $res->content();
-    		if ($@) {
-    			eval { die $@; };
-    			return;
-    		} else { 
-    			if ($result->{'result'} eq 'error' and $result->{'data'} eq 'unique_id_already_used') {
-    				$self->reinit(); 	# Reinitialize random seed
-					redo;				# Send another request
-    			}
-    			return $result;
-    		}
-    	} else {
-    		eval { die $res->status_line(); };
-    		return;
-    	}
-	}
+        if ($res->is_success()) {
+            my $result;
+            eval $res->content();
+            if ($@) {
+                eval { die $@; };
+                return;
+            } else { 
+                if ($result->{'result'} eq 'error' and $result->{'data'} eq 'unique_id_already_used') {
+                    $self->reinit();    # Reinitialize random seed
+                    redo;               # Send another request
+                }
+                return $result;
+            }
+        } else {
+            eval { die $res->status_line(); };
+            return;
+        }
+    }
 }
 
 =head1 CONFIGURATION AND ENVIRONMENT
