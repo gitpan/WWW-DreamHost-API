@@ -2,7 +2,7 @@ NAME
     WWW::DreamHost::API - Perl interface to DreamHost Web Panel API
 
 VERSION
-    1.01
+    1.02
 
 SYNOPSIS
      my $key = '6SHU5P2HLDAYECUM';

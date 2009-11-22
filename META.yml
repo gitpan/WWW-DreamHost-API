@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               WWW-DreamHost-API
-version:            1.01
+version:            1.02
 abstract:           DreamHost Web Panel API
 author:
     - Serguei Trouchelle <stro@cpan.org>

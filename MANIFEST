@@ -1,6 +1,7 @@
 Makefile.PL
 API.pm
 MANIFEST
+t/t0.t
 t/t1.t
 t/tpod.t
 t/tpodc.t

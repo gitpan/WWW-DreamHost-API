@@ -1,12 +1,12 @@
 package WWW::DreamHost::API;
 
-# $Id: API.pm 8 2009-10-18 11:43:13Z stro $
+# $Id: API.pm 12 2009-11-22 01:15:52Z stro $
 
 use strict;
 use warnings;
 use Carp;
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 
 use LWP::UserAgent;
 use Data::UUID;
@@ -17,7 +17,7 @@ WWW::DreamHost::API - Perl interface to DreamHost Web Panel API
 
 =head1 VERSION
 
-1.01
+1.02
 
 =head1 SYNOPSIS
 
