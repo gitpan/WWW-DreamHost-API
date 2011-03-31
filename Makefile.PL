@@ -1,4 +1,4 @@
-# $Id: Makefile.PL 8 2009-10-18 11:43:13Z stro $
+# $Id: Makefile.PL 28 2011-03-31 14:05:13Z stro $
 
 use strict;
 use warnings;
@@ -12,8 +12,9 @@ WriteMakefile(
   'VERSION_FROM'  => 'API.pm',
   'LICENSE'       => 'perl',
   'PREREQ_PM'     => {
-                         'LWP::UserAgent' => 0,
-                         'Crypt::SSLeay'  => 0,
-                         'Data::UUID'     => 0,
+                         'LWP::UserAgent'       => 0,
+                         'Crypt::SSLeay'        => 0,
+                         'Data::UUID'           => 0,
+                         'LWP::Protocol::https' => 0,
                      },
 );

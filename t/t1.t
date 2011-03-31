@@ -1,6 +1,6 @@
 #!/usr/env perl
 
-# $Id: t1.t 8 2009-10-18 11:43:13Z stro $
+# $Id: t1.t 28 2011-03-31 14:05:13Z stro $
 
 use strict;
 use warnings;
@@ -50,16 +50,16 @@ if (my $msg = $@) {
 
     $|=1;
 
-    my $api = new WWW::DreamHost::API($key);
+    my $api = WWW::DreamHost::API->new($key);
     is($api->{'__key'}, $key, 'WWW::DreamHost::API->new()');
 
     my $res = $api->command('api-list_accessible_cmds');
 
-    is($res->{'result'}, 'success', 'api-list_accessible_cmds (init)');
-
     my $tests = 2;
 
     if ($res->{'result'} eq 'success') {
+        is($res->{'result'}, 'success', 'api-list_accessible_cmds (init)');
+
         foreach my $cmdref (@{ $res->{'data'} }) {
             my $cmd = $cmdref->{'cmd'};
             $tests++;

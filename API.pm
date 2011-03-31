@@ -1,12 +1,12 @@
 package WWW::DreamHost::API;
 
-# $Id: API.pm 12 2009-11-22 01:15:52Z stro $
+# $Id: API.pm 28 2011-03-31 14:05:13Z stro $
 
 use strict;
 use warnings;
 use Carp;
 
-our $VERSION = '1.02';
+our $VERSION = '1.03';
 
 use LWP::UserAgent;
 use Data::UUID;
@@ -17,7 +17,7 @@ WWW::DreamHost::API - Perl interface to DreamHost Web Panel API
 
 =head1 VERSION
 
-1.02
+1.03
 
 =head1 SYNOPSIS
 
@@ -137,6 +137,8 @@ sub command {
             return;
         }
     }
+
+    return; # for Perl::Critic
 }
 
 =head1 CONFIGURATION AND ENVIRONMENT
@@ -151,6 +153,7 @@ with it.
 LWP::UserAgent
 Crypt::SSLeay
 Data::UUID
+LWP::protocol::https
 
 =head1 INCOMPATIBILITIES
 
@@ -166,13 +169,13 @@ See L<http://wiki.cpantesters.org/wiki/QuickStart>.
 
 =head1 AUTHOR
 
-Serguei Trouchelle L<stro@railways.dp.ua>
+Serguei Trouchelle L<stro@cpan.org>
 
 =head1 LICENSE AND COPYRIGHT
 
 This module is distributed under the same terms as Perl itself.
 
-Copyright (c) 2009 Serguei Trouchelle
+Copyright (c) 2009-2011 Serguei Trouchelle
 
 =cut
 

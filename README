@@ -2,7 +2,7 @@ NAME
     WWW::DreamHost::API - Perl interface to DreamHost Web Panel API
 
 VERSION
-    1.02
+    1.03
 
 SYNOPSIS
      my $key = '6SHU5P2HLDAYECUM';
@@ -54,7 +54,7 @@ CONFIGURATION AND ENVIRONMENT
     familiar with it.
 
 DEPENDENCIES
-    LWP::UserAgent Crypt::SSLeay Data::UUID
+    LWP::UserAgent Crypt::SSLeay Data::UUID LWP::protocol::https
 
 INCOMPATIBILITIES
     Not known.
@@ -67,10 +67,10 @@ BUGS AND LIMITATIONS
     <http://wiki.cpantesters.org/wiki/QuickStart>.
 
 AUTHOR
-    Serguei Trouchelle stro@railways.dp.ua
+    Serguei Trouchelle stro@cpan.org
 
 LICENSE AND COPYRIGHT
     This module is distributed under the same terms as Perl itself.
 
-    Copyright (c) 2009 Serguei Trouchelle
+    Copyright (c) 2009-2011 Serguei Trouchelle
 
