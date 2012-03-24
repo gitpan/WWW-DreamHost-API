@@ -1,12 +1,12 @@
 package WWW::DreamHost::API;
 
-# $Id: API.pm 28 2011-03-31 14:05:13Z stro $
+# $Id: API.pm 38 2012-03-24 10:09:04Z stro $
 
 use strict;
 use warnings;
 use Carp;
 
-our $VERSION = '1.03';
+our $VERSION = '1.04';
 
 use LWP::UserAgent;
 use Data::UUID;
@@ -17,7 +17,7 @@ WWW::DreamHost::API - Perl interface to DreamHost Web Panel API
 
 =head1 VERSION
 
-1.03
+1.04
 
 =head1 SYNOPSIS
 
@@ -55,6 +55,13 @@ sub new {
     };
 
     $self->{'__ua'}->env_proxy();
+
+    # Check if JSON is available
+    if (eval { require JSON; }) {
+        $self->{'__format'} = 'json';
+    } else {
+        $self->{'__format'} = 'perl';
+    }
 
     bless $self, $class;
     return $self;
@@ -115,23 +122,27 @@ sub command {
             'key'       => $self->{'__key'},
             'cmd'       => $cmd,
             'unique_id' => $self->uuid(),
-            'format'    => 'perl',
+            'format'    => $self->{'__format'},
             %extraparam,
         });
 
         if ($res->is_success()) {
             my $result;
-            eval $res->content();
-            if ($@) {
-                eval { die $@; };
-                return;
-            } else { 
-                if ($result->{'result'} eq 'error' and $result->{'data'} eq 'unique_id_already_used') {
-                    $self->reinit();    # Reinitialize random seed
-                    redo;               # Send another request
-                }
-                return $result;
+
+            if ($self->{'__format'} eq 'json') {
+                return unless $result = JSON::from_json($res->content());
+            } else {
+                return unless eval $res->content();
             }
+
+            return unless ref($result) eq 'HASH';
+
+            if ($result->{'result'} eq 'error' and $result->{'data'} eq 'unique_id_already_used') {
+                $self->reinit();    # Reinitialize random seed
+                redo;               # Send another request
+            }
+
+            return $result;
         } else {
             eval { die $res->status_line(); };
             return;
@@ -155,6 +166,10 @@ Crypt::SSLeay
 Data::UUID
 LWP::protocol::https
 
+If JSON.pm is installed, JSON format is used when making requests to API;
+otherwise Data::Dumper format is used. Note that Data::Dumper format is
+"eval"-ed so (in theory) it can be used for security breach. 
+
 =head1 INCOMPATIBILITIES
 
 Not known.
@@ -175,7 +190,7 @@ Serguei Trouchelle L<stro@cpan.org>
 
 This module is distributed under the same terms as Perl itself.
 
-Copyright (c) 2009-2011 Serguei Trouchelle
+Copyright (c) 2009-2012 Serguei Trouchelle
 
 =cut
 

@@ -1,9 +1,11 @@
 Makefile.PL
 API.pm
+CHANGES
 MANIFEST
 t/t0.t
 t/t1.t
 t/tpod.t
 t/tpodc.t
 README
+eg/dyndns.pl
 META.yml                                 Module meta-data (added by MakeMaker)

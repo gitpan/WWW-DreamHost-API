@@ -2,7 +2,7 @@ NAME
     WWW::DreamHost::API - Perl interface to DreamHost Web Panel API
 
 VERSION
-    1.03
+    1.04
 
 SYNOPSIS
      my $key = '6SHU5P2HLDAYECUM';
@@ -56,6 +56,10 @@ CONFIGURATION AND ENVIRONMENT
 DEPENDENCIES
     LWP::UserAgent Crypt::SSLeay Data::UUID LWP::protocol::https
 
+    If JSON.pm is installed, JSON format is used when making requests to
+    API; otherwise Data::Dumper format is used. Note that Data::Dumper
+    format is "eval"-ed so (in theory) it can be used for security breach.
+
 INCOMPATIBILITIES
     Not known.
 
@@ -72,5 +76,5 @@ AUTHOR
 LICENSE AND COPYRIGHT
     This module is distributed under the same terms as Perl itself.
 
-    Copyright (c) 2009-2011 Serguei Trouchelle
+    Copyright (c) 2009-2012 Serguei Trouchelle
 
