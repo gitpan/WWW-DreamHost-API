@@ -1,13 +1,13 @@
 #!/usr/env perl
 
-# $Id: t0.t 12 2009-11-22 01:15:52Z stro $
+# $Id: t0.t 39 2012-03-25 04:20:31Z stro $
 
 use strict;
 use warnings;
 
 BEGIN {
-	use Test;
-	plan('tests' => 1);
+    use Test;
+    plan('tests' => 1);
 }
 
 use WWW::DreamHost::API;
