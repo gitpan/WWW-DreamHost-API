@@ -1,0 +1,10 @@
+Makefile.PL
+API.pm
+CHANGES
+MANIFEST
+t/t0.t
+t/t1.t
+t/tpod.t
+t/tpodc.t
+eg/dyndns.pl
+README
